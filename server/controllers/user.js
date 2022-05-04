@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 const SECRET = process.env.SECRET;
-const HOST = process.env.SMTP_HOST;
+// const HOST = process.env.SMTP_HOST;
 const PORT = process.env.SMTP_PORT;
 const USER = process.env.SMTP_USER;
 const PASS = process.env.SMTP_PASS;
@@ -101,7 +101,7 @@ export const forgotPassword = (req, res) => {
 
   // NODEMAILER TRANSPORT FOR SENDING POST NOTIFICATION VIA EMAIL
   const transporter = nodemailer.createTransport({
-    host: HOST,
+    service: "Gmail",
     port: PORT,
     auth: {
       user: USER,

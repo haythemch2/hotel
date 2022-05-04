@@ -36,7 +36,7 @@ app.use('/profiles', profile)
 
 // NODEMAILER TRANSPORT FOR SENDING INVOICE VIA EMAIL
 const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
+    service: "Gmail",
     port : process.env.SMTP_PORT,
     auth: {
     user: process.env.SMTP_USER,

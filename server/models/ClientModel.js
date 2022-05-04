@@ -6,6 +6,8 @@ const ClientSchema = mongoose.Schema({
     email: String,
     phone: String,
     address: String,
+    date: String,
+    nationality: String,
     userId: [String],
     createdAt: {
         type: Date,
