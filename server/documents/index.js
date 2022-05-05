@@ -12,6 +12,9 @@ export default function ({
   subTotal,
   type,
   vat,
+  fodee,
+  dsht,
+  dTimbre,
   total,
   items,
   status,
@@ -192,12 +195,22 @@ img {
           <td style="font-size: 9px">Sub Total</td>
           <td style="text-align: right; font-size: 9px; font-weight: 700">${subTotal}</td>
         </tr>
-
+        <tr>
+        <td style="font-size: 10px">Fodee</td>
+        <td style="text-align: right; font-size: 9px; font-weight: 700">${fodee}</td>
+          </tr>
         <tr>
             <td style="font-size: 10px">VAT</td>
             <td style="text-align: right; font-size: 9px; font-weight: 700">${vat}</td>
           </tr>
-
+          <tr>
+          <td style="font-size: 10px">D.Timbre</td>
+          <td style="text-align: right; font-size: 9px; font-weight: 700">0.6</td>
+        </tr>
+        <tr>
+            <td style="font-size: 10px">D.S.H.T</td>
+            <td style="text-align: right; font-size: 9px; font-weight: 700">${dsht}</td>
+          </tr>
         <tr>
             <td style="font-size: 10px">Total</td>
             <td style="text-align: right; font-size: 9px; font-weight: 700">${total}</td>

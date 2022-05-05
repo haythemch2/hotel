@@ -9,7 +9,7 @@ const InvoiceSchema = mongoose.Schema({
   rates: String,
   vat: Number,
   fodee: Number,
-  DSHT: Number,
+  dsht: Number,
   dTimbre: Number,
   total: Number,
   subTotal: Number,

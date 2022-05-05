@@ -72,7 +72,9 @@ const Invoice = () => {
   const [invoiceData, setInvoiceData] = useState(initialState);
   const [rates, setRates] = useState(0);
   const [vat, setVat] = useState(0);
-//   const [vat, setVat] = useState(0)
+  const [fodee, setFodee] = useState(0);
+  const [dsht, setDsht] = useState(0);
+  const dTimbre = 0.6;
   const [currency, setCurrency] = useState(currencies[0].value);
   const [subTotal, setSubTotal] = useState(0);
   const [total, setTotal] = useState(0);
@@ -189,12 +191,20 @@ const Invoice = () => {
 
   useEffect(() => {
     const total = () => {
-      //Tax rate is calculated as (input / 100 ) * subtotal + subtotal
-      const overallSum = (rates / 100) * subTotal + subTotal;
-      //VAT is calculated as tax rates /100 * subtotal
-      setVat((rates / 100) * subTotal);
+      //VAT is calculated as tax 7 /100 * subtotal
+      setVat((7 / 100) * subTotal);
+      //fodee is calculated as tax 1/100 * subtotal
+      setFodee((1 / 100) * subTotal);
+      //D.S.H.T is calculated as tax tot(1* quantite)
+      let items = invoiceData.items;
+      const totDsht = items.reduce((a, b) => eval(a) + eval(b.quantity), 0);
+      setDsht(totDsht);
+      //Tax rate
+      const overallSum =
+       ( (7 / 100) * subTotal + subTotal + fodee + dsht + dTimbre).toFixed(2);
       setTotal(overallSum);
     };
+
     total();
   }, [invoiceData, rates, subTotal]);
 
@@ -227,6 +237,9 @@ const Invoice = () => {
           subTotal: subTotal,
           total: total,
           vat: vat,
+          fodee: fodee,
+          dTimbre: dTimbre,
+          dsht: dsht,
           rates: rates,
           currency: currency,
           dueDate: selectedDate,
@@ -244,6 +257,9 @@ const Invoice = () => {
             subTotal: subTotal,
             total: total,
             vat: vat,
+            fodee: fodee,
+            dTimbre: dTimbre,
+            dsht: dsht,
             rates: rates,
             currency: currency,
             dueDate: selectedDate,
@@ -527,13 +543,26 @@ const Invoice = () => {
             <h4>{subTotal}</h4>
           </div>
           <div className={styles.summaryItem}>
-            <p>VAT(%):</p>
+            <p>Fodee (1%):</p>
+            <h4>{fodee}</h4>
+          </div>
+          <div className={styles.summaryItem}>
+            <p>TVA(7%):</p>
             <h4>{vat}</h4>
           </div>
           <div className={styles.summaryItem}>
+            <p>D.Timbre:</p>
+            <h4>{dTimbre}</h4>
+          </div>
+          <div className={styles.summaryItem}>
+            <p>D.S.H.T:</p>
+            <h4>{dsht}</h4>
+          </div>
+
+          <div className={styles.summaryItem}>
             <p>Total</p>
             <h4 style={{ color: "black", fontSize: "18px", lineHeight: "8px" }}>
-              {currency} {toCommas(total)}
+              TND {toCommas(total)}
             </h4>
           </div>
         </div>
@@ -541,7 +570,7 @@ const Invoice = () => {
         <div className={styles.toolBar}>
           <Container>
             <Grid container>
-              <Grid item style={{ marginTop: "16px", marginRight: 10 }}>
+              {/* <Grid item style={{ marginTop: "16px", marginRight: 10 }}>
                 <TextField
                   type="text"
                   step="any"
@@ -552,7 +581,7 @@ const Invoice = () => {
                   placeholder="e.g 10"
                   label="Tax Rates(%)"
                 />
-              </Grid>
+              </Grid> */}
               <Grid item style={{ marginRight: 10 }}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <KeyboardDatePicker
@@ -568,7 +597,7 @@ const Invoice = () => {
                   />
                 </MuiPickersUtilsProvider>
               </Grid>
-              <Grid item style={{ width: 270, marginRight: 10 }}>
+              {/* <Grid item style={{ width: 270, marginRight: 10 }}>
                 <Autocomplete
                   {...defaultProps}
                   id="debug"
@@ -583,7 +612,7 @@ const Invoice = () => {
                   value={currency.value}
                   onChange={(event, value) => setCurrency(value.value)}
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
           </Container>
         </div>
