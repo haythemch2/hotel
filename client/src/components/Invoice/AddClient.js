@@ -150,12 +150,12 @@ const AddClient = ({ setOpen, open }) => {
             onClose={handleClose}
             style={{ paddingLeft: "20px", color: "white" }}
           >
-            New Customer
+           Nouveau client
           </DialogTitle>
           <DialogContent dividers>
             <div className="customInputs">
               <input
-                placeholder="Name"
+                placeholder="Nom"
                 style={inputStyle}
                 name="name"
                 type="text"
@@ -186,7 +186,7 @@ const AddClient = ({ setOpen, open }) => {
                 value={clientData.date}
               />
               <input
-                placeholder="Phone"
+                placeholder="Téléphone"
                 style={inputStyle}
                 name="phone"
                 type="text"
@@ -196,7 +196,7 @@ const AddClient = ({ setOpen, open }) => {
                 value={clientData.phone}
               />
               <input
-                placeholder="Address"
+                placeholder="Addresse"
                 style={inputStyle}
                 name="address"
                 type="text"
@@ -206,7 +206,7 @@ const AddClient = ({ setOpen, open }) => {
                 value={clientData.address}
               />
                     <input
-                placeholder="Nationality"
+                placeholder="Nationalité"
                 style={inputStyle}
                 name="nationality"
                 type="text"
@@ -224,7 +224,7 @@ const AddClient = ({ setOpen, open }) => {
               variant="contained"
               style={{ marginRight: "25px" }}
             >
-              Save Customer
+              Enregistrer le client
             </Button>
           </DialogActions>
         </Dialog>

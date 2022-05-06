@@ -18,9 +18,9 @@ const Settings = () => {
         <div className={styles.pageContainer}>
            
         <section className={styles.hero}>
-            <h1>Profile Settings</h1>
+            <h1>Paramètres de profil</h1>
             <div className={styles.paragraph}>
-                <p>Edit/ update your business profile</p>
+                <p>Modifier/mettre à jour votre profil d'entreprise</p>
             </div>
         </section>
         <section className={styles.stat}>

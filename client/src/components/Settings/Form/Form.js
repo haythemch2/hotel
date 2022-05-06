@@ -68,7 +68,7 @@ const Settings = () => {
         <Container component="main" maxWidth="sm">
         <Paper className={classes.paper} elevation={0} >
         <ProfileDetail  profiles={profiles} />
-        <Button variant="outlined" style={{margin: '30px', padding: '15px 30px'}} onClick={() => setSwitchEdit(1)}>Edit Profile</Button>
+        <Button variant="outlined" style={{margin: '30px', padding: '15px 30px'}} onClick={() => setSwitchEdit(1)}>Editer le profil</Button>
        </Paper>
        </Container>
       )}
@@ -94,7 +94,7 @@ const Settings = () => {
             <Input name="paymentDetails" label="Payment Details/Notes" handleChange={handleChange} type="text" multiline rows="4" value={form?.paymentDetails} />
           </Grid>
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
-           Update Settings
+          Mettre à jour les paramètres
           </Button>
           <Grid container justifyContent="flex-end">
           </Grid>

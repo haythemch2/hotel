@@ -4,7 +4,13 @@ const InvoiceSchema = mongoose.Schema({
   dueDate: Date,
   currency: String,
   items: [
-    { itemName: String, unitPrice: String, quantity: String, discount: String },
+    {
+      itemName: String,
+      unitPrice: String,
+      quantity: String,
+      discount: String,
+      person: String,
+    },
   ],
   rates: String,
   vat: Number,

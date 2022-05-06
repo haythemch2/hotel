@@ -172,9 +172,9 @@ const Invoices = () => {
 
 
   function checkStatus(status) {
-    return status === "Partial" ? {border: 'solid 0px #1976d2', backgroundColor: '#baddff', padding: '8px 18px', borderRadius: '20px' }
-        : status === "Paid" ? {border: 'solid 0px green', backgroundColor: '#a5ffcd', padding: '8px 18px', borderRadius: '20px' }
-        : status === "Unpaid" ? {border: 'solid 0px red', backgroundColor: '#ffaa91', padding: '8px 18px', borderRadius: '20px' }
+    return status === "Partielle" ? {border: 'solid 0px #1976d2', backgroundColor: '#baddff', padding: '8px 18px', borderRadius: '20px' }
+        : status === "Payé" ? {border: 'solid 0px green', backgroundColor: '#a5ffcd', padding: '8px 18px', borderRadius: '20px' }
+        : status === "Non payé" ? {border: 'solid 0px red', backgroundColor: '#ffaa91', padding: '8px 18px', borderRadius: '20px' }
         : "red";
           
 }
@@ -188,7 +188,7 @@ const Invoices = () => {
   if(rows.length === 0) {
     return  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', paddingTop: '20px', margin: '80px'}}>
       <NoData />
-    <p style={{padding: '40px', color: 'gray', textAlign: 'center'}}>No invoice yet. Click the plus icon to create invoice</p>
+    <p style={{padding: '40px', color: 'gray', textAlign: 'center'}}>Pas encore de facture. Cliquez sur l'icône plus pour créer une facture</p>
   
     </div>
   }
@@ -201,13 +201,13 @@ const Invoices = () => {
 
       <TableHead>
           <TableRow>
-            <TableCell style={headerStyle}>Number</TableCell>
+            <TableCell style={headerStyle}>Numéro</TableCell>
             <TableCell style={headerStyle}>Client</TableCell>
-            <TableCell style={headerStyle}>Amount</TableCell>
-            <TableCell style={headerStyle}>Due Date</TableCell>
-            <TableCell style={headerStyle}>Status</TableCell>
-            <TableCell style={headerStyle}>Edit</TableCell>
-            <TableCell style={headerStyle}>Delete</TableCell>
+            <TableCell style={headerStyle}>Montant</TableCell>
+            <TableCell style={headerStyle}>Date d'échéance</TableCell>
+            <TableCell style={headerStyle}>Statut</TableCell>
+            <TableCell style={headerStyle}>Modifier</TableCell>
+            <TableCell style={headerStyle}>Supprimer</TableCell>
           </TableRow>
         </TableHead>
 
@@ -219,7 +219,7 @@ const Invoices = () => {
             <TableRow key={row._id} style={{cursor: 'pointer'}} >
                 <TableCell style={tableStyle} onClick={() => openInvoice(row._id)}> {row.invoiceNumber} </TableCell>
                 <TableCell  style={tableStyle} onClick={() => openInvoice(row._id)} > {row.client.name} </TableCell>
-                <TableCell style={tableStyle} onClick={() => openInvoice(row._id)} >{row.currency} {row.total? toCommas(row.total): row.total} </TableCell>
+                <TableCell style={tableStyle} onClick={() => openInvoice(row._id)} >TND {row.total? toCommas(row.total): row.total} </TableCell>
                 <TableCell style={tableStyle} onClick={() => openInvoice(row._id)} > {moment(row.dueDate).fromNow()} </TableCell>
                 <TableCell style={tableStyle} onClick={() => openInvoice(row._id)} > <button style={checkStatus(row.status)}>{row.status}</button></TableCell>
              

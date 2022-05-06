@@ -50,7 +50,7 @@ useEffect(() => {
   if(clients.length === 0) {
     return  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', paddingTop: '20px', margin: '80px'}}>
       <NoData />
-    <p style={{padding: '40px', color: 'gray', textAlign: 'center'}}>No customers yet. Click the plus icon to add customer</p>
+    <p style={{padding: '40px', color: 'gray', textAlign: 'center'}}>Pas encore de clients. Cliquez sur l'icône plus pour ajouter un client</p>
   
     </div>
   }

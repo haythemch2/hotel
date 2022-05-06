@@ -68,7 +68,7 @@ export default function Uploader({ form, setForm }) {
           className={`${styles.dropzone} ${isDragActive ? styles.active : null}`}
         >
           <input {...getInputProps()} />
-        Upload Logo
+          Télécharger le logo
         </div>
         <Grid item style={{width: '100%'}}>
         <BorderLinearProgress variant="determinate" value={progress} />

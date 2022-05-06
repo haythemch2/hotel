@@ -151,7 +151,7 @@ const InvoiceDetails = () => {
       .then((res) => {
         const pdfBlob = new Blob([res.data], { type: "application/pdf" });
 
-        saveAs(pdfBlob, "invoice.pdf");
+        saveAs(pdfBlob, "facture.pdf");
       })
       .then(() => setDownloadStatus("success"));
   };
@@ -200,11 +200,11 @@ const InvoiceDetails = () => {
   function checkStatus() {
     return totalAmountReceived >= total
       ? "green"
-      : status === "Partial"
+      : status === "Partielle"
       ? "#1976d2"
-      : status === "Paid"
+      : status === "Payé"
       ? "green"
-      : status === "Unpaid"
+      : status === "Non payé"
       ? "red"
       : "red";
   }
@@ -222,7 +222,7 @@ const InvoiceDetails = () => {
           <ProgressButton
             onClick={sendPdf}
             state={sendStatus}
-            onSuccess={() => openSnackbar("Invoice sent successfully")}
+            onSuccess={() => openSnackbar("Facture envoyée avec succès")}
           >
             Send to Customer
           </ProgressButton>
@@ -245,7 +245,7 @@ const InvoiceDetails = () => {
             onClick={() => setOpen((prev) => !prev)}
           >
             <MonetizationOnIcon style={iconSize} />
-            Record Payment
+            Enregistrer le paiement
           </button>
         </div>
       )}
@@ -291,7 +291,7 @@ const InvoiceDetails = () => {
                 {Number(total - totalAmountReceived) <= 0 ? "Receipt" : type}
               </Typography>
               <Typography variant="overline" style={{ color: "gray" }}>
-                No:{" "}
+                Non:{" "}
               </Typography>
               <Typography variant="body2">
                 {invoiceData?.invoiceNumber}
@@ -314,7 +314,7 @@ const InvoiceDetails = () => {
                     style={{ color: "gray" }}
                     gutterBottom
                   >
-                    From
+                    Depuis
                   </Typography>
                   <Typography variant="subtitle2">
                     {invoice?.businessDetails?.data?.data?.businessName}
@@ -336,7 +336,7 @@ const InvoiceDetails = () => {
                   style={{ color: "gray", paddingRight: "3px" }}
                   gutterBottom
                 >
-                  Bill to
+                  facturer
                 </Typography>
                 <Typography variant="subtitle2" gutterBottom>
                   {client?.name}
@@ -353,14 +353,14 @@ const InvoiceDetails = () => {
                 style={{ color: "gray" }}
                 gutterBottom
               >
-                Status
+                Statut
               </Typography>
               <Typography
                 variant="h6"
                 gutterBottom
                 style={{ color: checkStatus() }}
               >
-                {totalAmountReceived >= total ? "Paid" : status}
+                {totalAmountReceived >= total ? "Payé" : status}
               </Typography>
               <Typography
                 variant="overline"
@@ -377,7 +377,7 @@ const InvoiceDetails = () => {
                 style={{ color: "gray" }}
                 gutterBottom
               >
-                Due Date
+                Date d'échéance
               </Typography>
               <Typography variant="body2" gutterBottom>
                 {selectedDate
@@ -385,10 +385,10 @@ const InvoiceDetails = () => {
                   : "27th Sep 2021"}
               </Typography>
               <Typography variant="overline" gutterBottom>
-                Amount
+                Total TTC
               </Typography>
               <Typography variant="h6" gutterBottom>
-                {currency} {toCommas(total)}
+                TND {toCommas(total)}
               </Typography>
             </Grid>
           </Grid>
@@ -400,11 +400,12 @@ const InvoiceDetails = () => {
               <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Item</TableCell>
-                    <TableCell>Qty</TableCell>
-                    <TableCell>Price</TableCell>
+                    <TableCell>DESIGNATIONS</TableCell>
+                   <TableCell >Person</TableCell>
+                    <TableCell>Quantité</TableCell>
+                    <TableCell>P.U.H.T</TableCell>
                     {/* <TableCell >Disc(%)</TableCell> */}
-                    <TableCell>Amount</TableCell>
+                    <TableCell>Montant-HT</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -420,6 +421,17 @@ const InvoiceDetails = () => {
                           name="itemName"
                           value={itemField.itemName}
                           placeholder="Item name or description"
+                          readOnly
+                        />{" "}
+                      </TableCell>
+                      <TableCell align="right">
+                        {" "}
+                        <InputBase
+                          sx={{ ml: 1, flex: 1 }}
+                          type="number"
+                          name="person"
+                          value={itemField?.person}
+                          placeholder="0"
                           readOnly
                         />{" "}
                       </TableCell>
@@ -471,9 +483,9 @@ const InvoiceDetails = () => {
           </div>
 
           <div className={styles.invoiceSummary}>
-            <div className={styles.summary}>Invoice Summary</div>
+            <div className={styles.summary}>Résumé de la facture</div>
             <div className={styles.summaryItem}>
-              <p>Subtotal:</p>
+              <p>Total H-T:</p>
               <h4>{subTotal}</h4>
             </div>
             <div className={styles.summaryItem}>
@@ -481,7 +493,7 @@ const InvoiceDetails = () => {
               <h4>{fodee}</h4>
             </div>
             <div className={styles.summaryItem}>
-              <p>{`VAT(${rates}%):`}</p>
+              <p>{`TVA (7%):`}</p>
               <h4>{vat}</h4>
             </div>
             <div className={styles.summaryItem}>
@@ -493,30 +505,30 @@ const InvoiceDetails = () => {
               <h4>{dsht}</h4>
             </div>
             <div className={styles.summaryItem}>
-              <p>Total</p>
+              <p>Total TTC</p>
               <h4>
-                {currency} {toCommas(total)}
+                TND{toCommas(total)}
               </h4>
             </div>
             <div className={styles.summaryItem}>
-              <p>Paid</p>
+              <p>Pyé</p>
               <h4>
-                {currency} {toCommas(totalAmountReceived)}
+                TND{toCommas(totalAmountReceived)}
               </h4>
             </div>
 
             <div className={styles.summaryItem}>
-              <p>Balance</p>
+              <p>Reste</p>
               <h4
                 style={{ color: "black", fontSize: "18px", lineHeight: "8px" }}
               >
-                {currency} {toCommas(total - totalAmountReceived)}
+               TND{toCommas(total - totalAmountReceived)}
               </h4>
             </div>
           </div>
 
           <div className={styles.note}>
-            <h4 style={{ marginLeft: "-10px" }}>Note/Payment Info</h4>
+            <h4 style={{ marginLeft: "-10px" }}>Arréte la présente facture à la somme de:</h4>
             <p style={{ fontSize: "14px" }}>{invoiceData.notes}</p>
           </div>
 

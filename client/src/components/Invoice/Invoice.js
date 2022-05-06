@@ -139,9 +139,9 @@ const Invoice = () => {
 
   useEffect(() => {
     if (type === "Receipt") {
-      setStatus("Paid");
+      setStatus("Payé");
     } else {
-      setStatus("Unpaid");
+      setStatus("Non payé");
     }
   }, [type]);
 
@@ -192,16 +192,25 @@ const Invoice = () => {
   useEffect(() => {
     const total = () => {
       //VAT is calculated as tax 7 /100 * subtotal
-      setVat((7 / 100) * subTotal);
+      setVat(((7 / 100) * subTotal).toFixed(2));
       //fodee is calculated as tax 1/100 * subtotal
       setFodee((1 / 100) * subTotal);
       //D.S.H.T is calculated as tax tot(1* quantite)
       let items = invoiceData.items;
-      const totDsht = items.reduce((a, b) => eval(a) + eval(b.quantity), 0);
+      const totDsht = items.reduce(
+        (a, b) => eval(a) + eval(b.quantity) * eval(b.person),
+        0
+      );
+
       setDsht(totDsht);
       //Tax rate
-      const overallSum =
-       ( (7 / 100) * subTotal + subTotal + fodee + dsht + dTimbre).toFixed(2);
+      const overallSum = (
+        (7 / 100) * subTotal +
+        subTotal +
+        fodee +
+        dsht +
+        dTimbre
+      ).toFixed(2);
       setTotal(overallSum);
     };
 
@@ -214,7 +223,14 @@ const Invoice = () => {
       ...prevState,
       items: [
         ...prevState.items,
-        { itemName: "", unitPrice: "", quantity: "", discount: "", amount: "" },
+        {
+          itemName: "",
+          unitPrice: "",
+          quantity: "",
+          discount: "",
+          amount: "",
+          person: "",
+        },
       ],
     }));
   };
@@ -290,7 +306,7 @@ const Invoice = () => {
   };
 
   if (!user) {
-    history.push("/login");
+    history.push("/");
   }
 
   return (
@@ -303,8 +319,8 @@ const Invoice = () => {
               {/* <Avatar alt="Logo" variant='square' src="" className={classes.large} /> */}
             </Grid>
             <Grid item>
-              <InvoiceType type={type} setType={setType} />
-              Invoice #:
+              {/* <InvoiceType type={type} setType={setType} /> */}
+              Facture #:
               <div
                 style={{
                   marginTop: "15px",
@@ -348,7 +364,7 @@ const Invoice = () => {
                   style={{ color: "gray", paddingRight: "3px" }}
                   gutterBottom
                 >
-                  Bill to
+                  facturer
                 </Typography>
 
                 {client && (
@@ -365,7 +381,7 @@ const Invoice = () => {
                       style={{ textTransform: "none" }}
                       onClick={() => setClient(null)}
                     >
-                      Change
+                      Changer
                     </Button>
                   </>
                 )}
@@ -379,7 +395,7 @@ const Invoice = () => {
                       <TextField
                         {...params}
                         required={!invoice && true}
-                        label="Select Customer"
+                        label="Sélectionnez le client"
                         margin="normal"
                         variant="outlined"
                       />
@@ -409,14 +425,14 @@ const Invoice = () => {
                 style={{ color: "gray" }}
                 gutterBottom
               >
-                Status
+                Statut
               </Typography>
               <Typography
                 variant="h6"
                 gutterBottom
                 style={{ color: type === "Receipt" ? "green" : "red" }}
               >
-                {type === "Receipt" ? "Paid" : "Unpaid"}
+                {type === "Receipt" ? "Payé" : "Non payé"}
               </Typography>
               <Typography
                 variant="overline"
@@ -433,7 +449,7 @@ const Invoice = () => {
                 style={{ color: "gray" }}
                 gutterBottom
               >
-                Due Date
+                Date d'échéance
               </Typography>
               <Typography variant="body2" gutterBottom>
                 {selectedDate
@@ -441,10 +457,10 @@ const Invoice = () => {
                   : "27th Sep 2021"}
               </Typography>
               <Typography variant="overline" gutterBottom>
-                Amount
+                Total TTC
               </Typography>
               <Typography variant="h6" gutterBottom>
-                {currency} {toCommas(total)}
+                TND {toCommas(total)}
               </Typography>
             </Grid>
           </Grid>
@@ -455,11 +471,12 @@ const Invoice = () => {
             <Table className={classes.table} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Item</TableCell>
-                  <TableCell>Qty</TableCell>
-                  <TableCell>Price</TableCell>
-                  {/* <TableCell >Disc(%)</TableCell> */}
-                  <TableCell>Amount</TableCell>
+                  <TableCell>DESIGNATIONS</TableCell>
+                  <TableCell>Person</TableCell>
+                  <TableCell>Quantité</TableCell>
+                  <TableCell>P.U.H.T</TableCell>
+
+                  <TableCell>Montant-HT</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -484,6 +501,17 @@ const Invoice = () => {
                       <InputBase
                         sx={{ ml: 1, flex: 1 }}
                         type="number"
+                        name="person"
+                        onChange={(e) => handleChange(index, e)}
+                        value={itemField.person}
+                        placeholder="0"
+                      />{" "}
+                    </TableCell>
+                    <TableCell align="right">
+                      {" "}
+                      <InputBase
+                        sx={{ ml: 1, flex: 1 }}
+                        type="number"
                         name="quantity"
                         onChange={(e) => handleChange(index, e)}
                         value={itemField.quantity}
@@ -501,7 +529,7 @@ const Invoice = () => {
                         placeholder="0"
                       />{" "}
                     </TableCell>
-                    {/* <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="discount"  onChange={e => handleChange(index, e)} value={itemField.discount} placeholder="0" /> </TableCell> */}
+
                     <TableCell align="right">
                       {" "}
                       <InputBase
@@ -513,6 +541,7 @@ const Invoice = () => {
                           itemField.quantity * itemField.unitPrice -
                           (itemField.quantity *
                             itemField.unitPrice *
+                            itemField.person *
                             itemField.discount) /
                             100
                         }
@@ -537,9 +566,9 @@ const Invoice = () => {
         </div>
 
         <div className={styles.invoiceSummary}>
-          <div className={styles.summary}>Invoice Summary</div>
+          <div className={styles.summary}>Résumé de la facture</div>
           <div className={styles.summaryItem}>
-            <p>Sub total:</p>
+            <p>Total H-T:</p>
             <h4>{subTotal}</h4>
           </div>
           <div className={styles.summaryItem}>
@@ -560,7 +589,7 @@ const Invoice = () => {
           </div>
 
           <div className={styles.summaryItem}>
-            <p>Total</p>
+            <p>Total TTC</p>
             <h4 style={{ color: "black", fontSize: "18px", lineHeight: "8px" }}>
               TND {toCommas(total)}
             </h4>
@@ -617,10 +646,10 @@ const Invoice = () => {
           </Container>
         </div>
         <div className={styles.note}>
-          <h4>Note/Payment Info</h4>
+          <h4>Arréte la présente facture à la somme de:</h4>
           <textarea
             style={{ border: "solid 1px #d6d6d6", padding: "10px" }}
-            placeholder="Provide additional details or terms of service"
+            placeholder="Fournir des détails supplémentaires ou des conditions d'utilisation"
             onChange={(e) =>
               setInvoiceData({ ...invoiceData, notes: e.target.value })
             }
@@ -639,7 +668,7 @@ const Invoice = () => {
             className={classes.button}
             startIcon={<SaveIcon />}
           >
-            Save and Continue
+            Sauvegarder et continuer
           </Button>
         </Grid>
       </form>

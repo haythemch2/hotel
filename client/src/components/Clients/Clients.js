@@ -159,15 +159,15 @@ const Clients = ({ setOpen, setCurrentId, clients }) => {
             <TableHead>
               <TableRow>
                 <TableCell style={{ ...headerStyle, width: "10px" }}>
-                  Number
+                Numéro
                 </TableCell>
-                <TableCell style={headerStyle}>Name</TableCell>
+                <TableCell style={headerStyle}>Nom</TableCell>
                 <TableCell style={headerStyle}>Email</TableCell>
-                <TableCell style={headerStyle}>Nationality</TableCell>
-                <TableCell style={headerStyle}>Phone</TableCell>
-                <TableCell style={headerStyle}>Date of Birth</TableCell>
-                <TableCell style={headerStyle}>Edit</TableCell>
-                <TableCell style={headerStyle}>Delete</TableCell>
+                <TableCell style={headerStyle}>Nationalité</TableCell>
+                <TableCell style={headerStyle}>Téléphone</TableCell>
+                <TableCell style={headerStyle}>Date de naissance</TableCell>
+                <TableCell style={headerStyle}>Modifier</TableCell>
+                <TableCell style={headerStyle}>Supprimer</TableCell>
               </TableRow>
             </TableHead>
 

@@ -161,12 +161,12 @@ const AddClient = ({ setOpen, open, currentId, setCurrentId }) => {
             onClose={handleClose}
             style={{ paddingLeft: "20px", color: "white" }}
           >
-            {currentId ? "Edit Customer" : "Add new Client"}
+            {currentId ? "Modifier le client" : "Ajouter nouveau client"}
           </DialogTitle>
           <DialogContent dividers>
             <div className="customInputs">
               <input
-                placeholder="Name"
+                placeholder="Nom"
                 style={inputStyle}
                 name="name"
                 type="text"
@@ -188,7 +188,7 @@ const AddClient = ({ setOpen, open, currentId, setCurrentId }) => {
               />
 
               <input
-                placeholder="Phone"
+                placeholder="Téléphone"
                 style={inputStyle}
                 name="phone"
                 type="text"
@@ -199,7 +199,7 @@ const AddClient = ({ setOpen, open, currentId, setCurrentId }) => {
               />
 
               <input
-                placeholder="Address"
+                placeholder="Adresse"
                 style={inputStyle}
                 name="address"
                 type="text"
@@ -216,7 +216,7 @@ const AddClient = ({ setOpen, open, currentId, setCurrentId }) => {
               variant="contained"
               style={{ marginRight: "25px" }}
             >
-              Save Customer
+              Enregistrer le client
             </Button>
           </DialogActions>
         </Dialog>

@@ -113,12 +113,16 @@ img {
 </head>
 <body>
 <div class="invoice-container">
-<section  class="header">
+<section  class="header" >
         <div>
           ${company.logo ? `<img src=${company?.logo} />` : `<h2>___</h2>`}
         </div>
-        <div class="receipt-id" style="margin-top: -120px 0 40px 0">
-            
+        <div style="margin-bottom: 50px; margin-top: 20px ; height:60px" >
+        ${
+          company.paymentDetails
+            ? `<p style="font-size: 9px; line-height: 5px">  ${company?.paymentDetails} </p>`
+            : `<h2>___</h2>`
+        }
         </div>
 </section>
 <section class="address">
@@ -162,6 +166,7 @@ img {
 <table>
   <tr>
     <th style="font-size: 9px">Item</th>
+    <th style="font-size: 9px">Person</th>
     <th style="font-size: 9px">Quantity</th>
     <th style="font-size: 9px">Price</th>
 
@@ -172,6 +177,7 @@ img {
     (item) =>
       `  <tr>
     <td style="font-size: 9px">${item.itemName}</td>
+    <td style="font-size: 9px">${item.person}</td>
     <td style="font-size: 9px">${item.quantity}</td>
     <td style="font-size: 9px">${item.unitPrice}</td>
     
